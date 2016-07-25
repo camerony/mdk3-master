@@ -3445,7 +3445,7 @@ int mdk_parser(int argc, char *argv[])
 
     if ((argc < 3) || (strlen(argv[2]) != 1))
     {
-	printf(use_head);
+    printf("%s", use_head);
 	return -1;
     }
 
@@ -3465,11 +3465,11 @@ int mdk_parser(int argc, char *argv[])
 	    if (! strcmp(argv[t], "-n")) if (argc > t+1) ssid = argv[t+1];
 	    if (! strcmp(argv[t], "-f")) if (argc > t+1) {
 		if (ssid_file_name == NULL) ssid_file_name = argv[t+1];
-		else { printf(use_beac); return -1; }
+		else { printf("%s", use_beac); return -1; }
 	    }
 	    if (! strcmp(argv[t], "-v")) if (argc > t+1) {
 		if (ssid_file_name == NULL) { ssid_file_name = argv[t+1]; adv=1; }
-		else { printf(use_beac); return -1; }
+		else { printf("%s", use_beac); return -1; }
 	    }
 	    if (! strcmp(argv[t], "-s")) if (argc > t+1) pps = strtol(argv[t+1], (char **) NULL, 10);
 	    if (! strcmp(argv[t], "-c")) if (argc > t+1) fchan = strtol(argv[t+1], (char **) NULL, 10);
@@ -3487,12 +3487,12 @@ int mdk_parser(int argc, char *argv[])
 	for (t=3; t<argc; t++)
 	{
 	    if (! strcmp(argv[t], "-a")) {
-		  if (! argc > t+1) { printf(use_auth); return -1; }
+		  if (! argc > t+1) { printf("%s", use_auth); return -1; }
 		  ap = (uchar *) parse_mac(argv[t+1]);
 		  mode = 'A';
 	    }
         if (! strcmp(argv[t], "-i")) {
-		  if (! argc > t+1) { printf(use_auth); return -1; }
+		  if (! argc > t+1) { printf("%s", use_auth); return -1; }
 		  target = (uchar *) parse_mac(argv[t+1]);
 		  mode = 'i';
 		  usespeed = 1; pps = 500;
@@ -3550,7 +3550,7 @@ int mdk_parser(int argc, char *argv[])
 		printf("\nSSID Wordlist Mode activated!\n");
 	    }
 	    if (! strcmp(argv[t], "-t")) {
-		if (! argc > t+1) { printf(use_prob); return -1; }
+		if (! argc > t+1) { printf("%s", use_prob); return -1; }
 		target = (uchar *) parse_mac(argv[t+1]);
 	    }
 	    if (! strcmp(argv[t], "-s")) if (argc > t+1) {
@@ -3591,7 +3591,7 @@ int mdk_parser(int argc, char *argv[])
 	for (t=3; t<argc; t++)
 	{
 	    if (! strcmp(argv[t], "-t")) {
-		if (! (argc > t+1)) { printf(use_mich); return -1; }
+		if (! (argc > t+1)) { printf("%s", use_mich); return -1; }
 		target = (uchar *) parse_mac(argv[t+1]);
 	    }
 	    if (! strcmp(argv[t], "-n")) if (argc > t+1) {
@@ -3611,7 +3611,7 @@ int mdk_parser(int argc, char *argv[])
     break;
     case 'x':
 	mode = 'x';
-        if (argc < 4) { printf(use_eapo); return -1; }
+        if (argc < 4) { printf("%s", use_eapo); return -1; }
         eapol_test = strtol(argv[3], (char **) NULL, 10);
         usespeed = 1;
         pps = 400;
@@ -3621,16 +3621,16 @@ int mdk_parser(int argc, char *argv[])
 	for (t=4; t<argc; t = t + 2)
 	{
 	    if (! strcmp(argv[t], "-n")) {
-              if (! (argc > t+1)) { printf(use_eapo); return -1; }
+              if (! (argc > t+1)) { printf("%s", use_eapo); return -1; }
               ssid = argv[t + 1];
 	    }
 	    if (! strcmp(argv[t], "-t")) {
-		if (! (argc > t+1)) { printf(use_eapo); return -1; }
+		if (! (argc > t+1)) { printf("%s", use_eapo); return -1; }
 		target = (uchar *) parse_mac(argv[t+1]);
                 memcpy(eapol_dst, target, ETH_MAC_LEN);
 	    }
 	    if (! strcmp(argv[t], "-c")) {
-		if (! (argc > t+1)) { printf(use_eapo); return -1; }
+		if (! (argc > t+1)) { printf("%s", use_eapo); return -1; }
 		mac_sa = (uchar *) parse_mac(argv[t+1]);
                 memcpy(eapol_src, mac_sa, ETH_MAC_LEN);
 	    }
@@ -3658,13 +3658,13 @@ int mdk_parser(int argc, char *argv[])
 		usespeed = 1;
 	    }
 	    if (! strcmp(argv[t], "-w")) if (argc > t+1) {
-		if (wblist != 0) { printf(use_deau); return -1; }
+		if (wblist != 0) { printf("%s", use_deau); return -1; }
 		load_whitelist(argv[t+1]);
 		list_file = argv[t+1];
 		wblist = 1;
 	    }
 	    if (! strcmp(argv[t], "-b")) if (argc > t+1) {
-		if (wblist != 0) { printf(use_deau); return -1; }
+		if (wblist != 0) { printf("%s", use_deau); return -1; }
 		load_whitelist(argv[t+1]);
 		list_file = argv[t+1];
 		wblist = 2;
@@ -3686,17 +3686,17 @@ int mdk_parser(int argc, char *argv[])
 	for (t=3; t<argc; t++)
 	{
 	    if (! strcmp(argv[t], "-t")) {
-		if (! (argc > t+1)) { printf(use_macb); return -1; }
+		if (! (argc > t+1)) { printf("%s", use_macb); return -1; }
 		uchar *tmp_mac_addr = (uchar *) parse_mac(argv[t+1]);
 		target = malloc(6);
 		memcpy(target, tmp_mac_addr, 6);
 	    }
 	    if (! strcmp(argv[t], "-m")) {
-		if (! (argc > t+1)) { printf(use_macb); return -1; }
+		if (! (argc > t+1)) { printf("%s", use_macb); return -1; }
 		mac_base = (uchar *) parse_half_mac(argv[t+1]);
 	    }
 	    if (! strcmp(argv[t], "-f")) {
-		if (! (argc > t+1)) { printf(use_macb); return -1; }
+		if (! (argc > t+1)) { printf("%s", use_macb); return -1; }
 		uchar *tmp_mac_addr = (uchar *) parse_mac(argv[t+1]);
 		mac_base = (uchar *) malloc(3);
 		mac_lower = (uchar *) malloc(3);
@@ -3711,7 +3711,7 @@ int mdk_parser(int argc, char *argv[])
 	for (t=3; t<argc; t++)
 	{
 	    if (! strcmp(argv[t], "-t")) {
-		if (! (argc > t+1)) { printf(use_wpad); return -1; }
+		if (! (argc > t+1)) { printf("%s", use_wpad); return -1; }
 		uchar *tmp_mac_addr = (uchar *) parse_mac(argv[t+1]);
 		target = malloc(6);
 		memcpy(target, tmp_mac_addr, 6);
@@ -3719,7 +3719,7 @@ int mdk_parser(int argc, char *argv[])
 	}
    break;
     default:
-	printf(use_head);
+	printf("%s", use_head);
 	return -1;
 	break;
     }
@@ -3728,7 +3728,7 @@ int mdk_parser(int argc, char *argv[])
 
     if ((mode == 'w') && (got_ssid == 0)) {
 	printf("Please specify a target ESSID!\n\n");
-	printf(use_wids);
+	printf("%s", use_wids);
 	return -1;
     }
     if ((mode == 'P') && (usespeed == 0)) {
@@ -3911,64 +3911,64 @@ int main( int argc, char *argv[] )
 
     if( argc < 2 )
     {
-	printf(use_head);
+	printf("%s", use_head);
         return( 1 );
     }
 
     if( !memcmp(argv[1], "--help", 6))
     {
 	if( argc < 3 ) {
-	    printf(use_head);
+	    printf("%s", use_head);
             return( 1 );
 	}
 
 	switch (argv[2][0]) {
 	    case 'b':
-		printf(use_beac);
+		printf("%s", use_beac);
 		break;
 	    case 'a':
-		printf(use_auth);
+		printf("%s", use_auth);
 		break;
 	    case 'p':
-		printf(use_prob);
+		printf("%s", use_prob);
 		break;
 	    case 'd':
-		printf(use_deau);
+		printf("%s", use_deau);
 		break;
 	    case 'm':
-		printf(use_mich);
+		printf("%s", use_mich);
 		break;
 	    case 'x':
-		printf(use_eapo);
+		printf("%s", use_eapo);
 		break;
 	    case 'w':
-		printf(use_wids);
+		printf("%s", use_wids);
 		break;
 	    case 'f':
-		printf(use_macb);
+		printf("%s", use_macb);
 		break;
 	    case 'g':
-		printf(use_wpad);
+		printf("%s", use_wpad);
 		break;
 	    default:
-		printf(use_head);
+		printf("%s", use_head);
         }
 	return(0);
     }
 
     if( !memcmp(argv[1], "--fullhelp", 10))
     {
-	printf(use_head);
-	printf("\n\n");
-	printf(use_beac);
-	printf(use_auth);
-	printf(use_prob);
-	printf(use_deau);
-	printf(use_mich);
-	printf(use_eapo);
-	printf(use_wids);
-	printf(use_macb);
-	printf(use_wpad);
+	printf("%s", use_head);
+ 	printf("\n\n");
+	printf("%s", use_beac);
+	printf("%s", use_auth);
+	printf("%s", use_prob);
+	printf("%s", use_deau);
+	printf("%s", use_mich);
+	printf("%s", use_eapo);
+	printf("%s", use_wids);
+	printf("%s", use_macb);
+	printf("%s", use_wpad);
 	return (0);
     }
 
