@@ -253,7 +253,7 @@ int eapol_wtype = FLAG_AUTH_WPA;             // default auth type: WPA
 int eapol_ucast = FLAG_TKIP;                 // default unicast cipher: TKIP
 int eapol_mcast = FLAG_TKIP;                 // default multicast cipher: TKIP
 
-char use_head[]="\nMDK 3.0 " VERSION " - \"fuck the censorship\"\n"
+char use_head[]="\nMDK 3.1 " VERSION " - \"fuck the censorship\"\n"
 		"by ASPj of k2wrlz, using the osdep library from aircrack-ng\n"
 		"And with lots of help from the great aircrack-ng community:\n"
 		"Antragon, moongray, Ace, Zero_Chaos, Hirte, thefkboss, ducttape,\n"
@@ -706,7 +706,7 @@ char generate_channel()
 
     char c = 0;
     c = (random() % 14) + 1;
-    return c;
+    return chans[c];
 }
 
 char random_char()
