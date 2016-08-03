@@ -188,6 +188,7 @@ struct clist *current = &cl;                 // Pointer to current client
 struct clist a_data;                         // List with data frames for intelligent Auth DoS
 struct clist *a_data_current = &a_data;      // And a pointer to its current frame
 int current_channel = 0;                     // Channel hopper writes current channel here for being displayed by print functions
+int channel_count = 0;                       // Channel counter
 uchar *essid;                                // Pointer to ESSID for WIDS confusion
 int essid_len;                               // And its length
 int init_wids = 0;                           // Is WIDS environment ready?
@@ -1220,17 +1221,8 @@ uchar *get_macs_from_packet(char type, uchar *packet)
 
 void channel_hopper()
 {
-    // A simple thread to hop channels
-    int cclp = 0;
-
-    while (1) {
-
-	set_channel(chans[cclp]);
-	cclp++;
-	if (chans[cclp] == 0) cclp = 0;
+	set_channel(chans[rand() % channel_count]);
 	sleep(hopper_seconds);
-
-    }
 }
 
 void init_channel_hopper(char *chanlist, int seconds)
@@ -1254,7 +1246,7 @@ void init_channel_hopper(char *chanlist, int seconds)
 		}
 	    }
 	}
-
+	channel_count = lpos;
 	chans[lpos] = 0;
     }
 
@@ -3866,7 +3858,7 @@ statshortcut:
         {
             t_prev = time( NULL );
 	    print_stats(mode, frm, resps, nb_sent_ps);
-	    printf ("\rPackets sent: %6d - Speed: %4d packets/sec", nb_sent, nb_sent_ps);
+	    printf ("\rPackets sent: %6d - Speed: %4d packets/sec ", nb_sent, nb_sent_ps);
 	    fflush(stdout);
 	    nb_sent_ps=0;
 	    resps=0;
