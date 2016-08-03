@@ -2047,7 +2047,7 @@ struct pckt create_beacon_frame(char *ssid, int chan, int wep, int random_mac, i
     // Set Parameters 1
     memcpy(pkt+38+slen, param1, modelen);
     // Set Channel
-    pkt[38+slen+modelen] = chan;
+    pkt[38+slen+modelen] = get_channel();
     // Set Parameters 2
     memcpy(pkt+39+slen+modelen, param2, 14);
     //Set WPA tag
@@ -3793,16 +3793,7 @@ int mdk_parser(int argc, char *argv[])
 	switch (mode)
 	{
 	case 'B':
-	    /*if ((nb_sent % 30 == 0) || (total_time % 3 == 0))  // Switch Channel every 30 frames or 3 seconds
-	    {
-		if (fchan) {
-		    set_channel(fchan);
-		    chan = fchan;
-		} else {
-		    chan = generate_channel();
-		    set_channel(chan);
-		}
-	    }*/
+
 	    frm = create_beacon_frame(ssid, chan, wep, random_mac, gmode, adhoc, adv);
 	    break;
 	case 'b':
