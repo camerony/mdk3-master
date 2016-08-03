@@ -217,7 +217,7 @@ int useqosexploit = 0;                       // Is 1 when user decided to use be
 int wpad_cycles = 0, wpad_auth = 0;          // Counters for WPA downgrade: completed deauth cycles, sniffed 802.1x auth packets
 int wpad_wep = 0, wpad_beacons = 0;          // Counters for WPA downgrade: sniffed WEP/open packets, sniffed beacons/sec
 
-int chans [MAX_CHAN_COUNT] = { 1, 7, 13, 2, 8, 3, 14, 9, 4, 10, 5, 11, 6, 12, 0 };
+int chans [MAX_CHAN_COUNT] = { 1, 7, 13, 2, 8, 3, 14, 9, 4, 10, 5, 11, 6, 12, 36, 38, 40, 42, 44, 46, 48, 149, 151, 153, 155, 157, 159, 161, 165, 0 };
 
 #define PKT_EAPOL_START \
 	"\x08\x01\x3a\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00" \
@@ -319,13 +319,11 @@ char use_beac[]="b   - Beacon Flood Mode\n"
 		"         Show station using WPA AES encryption\n"
 		"      -m\n"
 		"         Use valid accesspoint MAC from OUI database\n"
-		"      -h\n"
-		"         Hop to channel where AP is spoofed\n"
-		"         This makes the test more effective against some devices/drivers\n"
-		"         But it reduces packet rate due to channel hopping.\n"
-		"      -c <chan>\n"
-		"         Fake an AP on channel <chan>. If you want your card to hop on\n"
-		"         this channel, you have to set -h option, too!\n"
+		"      -c [chan,chan,chan,...]\n"
+		"         Enable channel hopping. Without providing any channels, mdk3 will hop an all\n"
+		"         b/g/n channels. Channel will be changed every 3 seconds.\n";
+		"         802.11g - 1,2,3,4,5,6,7,8,9,10,11,12,13,14\n";
+		"         802.11n - 36,38,40,42,44,46,48,149,151,153,155,157,159,161,165\n";
 		"      -s <pps>\n"
 		"         Set speed in packets per second (Default: 50)\n";
 
@@ -374,6 +372,8 @@ char use_deau[]="d   - Deauthentication / Disassociation Amok Mode\n"
 		"      -c [chan,chan,chan,...]\n"
 		"         Enable channel hopping. Without providing any channels, mdk3 will hop an all\n"
 		"         14 b/g channels. Channel will be changed every 5 seconds.\n";
+		"         802.11g - 1,2,3,4,5,6,7,8,9,10,11,12,13,14\n";
+		"         802.11n - 36,38,40,42,44,46,48,149,151,153,155,157,159,161,165\n";
 
 char use_mich[]="m   - Michael shutdown exploitation (TKIP)\n"
 		"      Cancels all traffic continuously\n"
@@ -417,6 +417,8 @@ char use_wids[]="w   - WIDS/WIPS/WDS Confusion\n"
 		"         SSID of target WDS network\n"
 		"      -c [chan,chan,chan...]\n"
 		"         Use channel hopping\n"
+		"         802.11g - 1,2,3,4,5,6,7,8,9,10,11,12,13,14\n";
+		"         802.11n - 36,38,40,42,44,46,48,149,151,153,155,157,159,161,165\n";
 		"      -z\n"
 		"         activate Zero_Chaos' WIDS exploit\n"
 		"         (authenticates clients from a WDS to foreign APs to make WIDS go nuts)\n";
@@ -698,15 +700,6 @@ struct pckt generate_mac(int kind)
 	mac.data = get_valid_mac_from_list(1, accesspoints_count);
 
     return mac;
-}
-
-char generate_channel()
-{
-// Generate a random channel
-
-    char c = 0;
-    c = (random() % 14) + 1;
-    return chans[c];
 }
 
 char random_char()
@@ -3472,10 +3465,7 @@ int mdk_parser(int argc, char *argv[])
 		else { printf("%s", use_beac); return -1; }
 	    }
 	    if (! strcmp(argv[t], "-s")) if (argc > t+1) pps = strtol(argv[t+1], (char **) NULL, 10);
-	    if (! strcmp(argv[t], "-c")) if (argc > t+1) fchan = strtol(argv[t+1], (char **) NULL, 10);
-	    //if (! strcmp(argv[t], "-h")) mode = 'B';
-	    if (! strcmp(argv[t], "-h")) {
-	    	mode = 'B';
+	    if (! strcmp(argv[t], "-c")) {
 			if (argc > t+1) {
 			    // There is a channel list given
 			    init_channel_hopper(argv[t+1], 3);
@@ -3793,13 +3783,7 @@ int mdk_parser(int argc, char *argv[])
 
 	switch (mode)
 	{
-	case 'B':
-
-	    frm = create_beacon_frame(ssid, chan, wep, random_mac, gmode, adhoc, adv);
-	    break;
 	case 'b':
-	    if (fchan) chan = fchan;
-		else chan = generate_channel();
 	    frm = create_beacon_frame(ssid, chan, wep, random_mac, gmode, adhoc, adv);
 	    break;
 	case 'a':  // Automated Auth DoS mode
