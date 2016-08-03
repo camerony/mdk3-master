@@ -1240,7 +1240,8 @@ void init_channel_hopper(char *chanlist, int seconds)
     char *token = NULL;
     int chan_cur = EOF;
     int lpos = 0;
-
+    time_t t;
+	srand((unsigned) time(&t));
     if (chanlist == NULL) {    // No channel list given - using defaults
 	printf("\nUsing default channels for hopping.\n");
     } else {
