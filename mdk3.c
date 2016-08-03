@@ -219,7 +219,6 @@ int wpad_wep = 0, wpad_beacons = 0;          // Counters for WPA downgrade: snif
 
 int chans [MAX_CHAN_COUNT] = { 1, 7, 13, 2, 8, 3, 14, 9, 4, 10, 5, 11, 6, 12, 0 };
 
-
 #define PKT_EAPOL_START \
 	"\x08\x01\x3a\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00" \
 	"\x70\x6a\xaa\xaa\x03\x00\x00\x00\x88\x8e\x01\x01\x00\x00"
@@ -3473,7 +3472,17 @@ int mdk_parser(int argc, char *argv[])
 	    }
 	    if (! strcmp(argv[t], "-s")) if (argc > t+1) pps = strtol(argv[t+1], (char **) NULL, 10);
 	    if (! strcmp(argv[t], "-c")) if (argc > t+1) fchan = strtol(argv[t+1], (char **) NULL, 10);
-	    if (! strcmp(argv[t], "-h")) mode = 'B';
+	    //if (! strcmp(argv[t], "-h")) mode = 'B';
+	    if (! strcmp(argv[t], "-h")) {
+	    	mode = 'B';
+			if (argc > t+1) {
+			    // There is a channel list given
+			    init_channel_hopper(argv[t+1], 3);
+			} else {
+			    // No list given
+			    init_channel_hopper(NULL, 3);
+			}
+	    }
 	    if (! strcmp(argv[t], "-m")) random_mac = 0;
 	    if (! strcmp(argv[t], "-w")) wep = 1;
 	    if (! strcmp(argv[t], "-g")) gmode = 1;
@@ -3784,7 +3793,7 @@ int mdk_parser(int argc, char *argv[])
 	switch (mode)
 	{
 	case 'B':
-	    if ((nb_sent % 30 == 0) || (total_time % 3 == 0))  // Switch Channel every 30 frames or 3 seconds
+	    /*if ((nb_sent % 30 == 0) || (total_time % 3 == 0))  // Switch Channel every 30 frames or 3 seconds
 	    {
 		if (fchan) {
 		    set_channel(fchan);
@@ -3793,7 +3802,7 @@ int mdk_parser(int argc, char *argv[])
 		    chan = generate_channel();
 		    set_channel(chan);
 		}
-	    }
+	    }*/
 	    frm = create_beacon_frame(ssid, chan, wep, random_mac, gmode, adhoc, adv);
 	    break;
 	case 'b':
