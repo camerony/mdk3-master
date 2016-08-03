@@ -321,9 +321,9 @@ char use_beac[]="b   - Beacon Flood Mode\n"
 		"         Use valid accesspoint MAC from OUI database\n"
 		"      -c [chan,chan,chan,...]\n"
 		"         Enable channel hopping. Without providing any channels, mdk3 will hop an all\n"
-		"         b/g/n channels. Channel will be changed every 3 seconds.\n";
-		"         802.11g - 1,2,3,4,5,6,7,8,9,10,11,12,13,14\n";
-		"         802.11n - 36,38,40,42,44,46,48,149,151,153,155,157,159,161,165\n";
+		"         b/g/n channels. Channel will be changed every 3 seconds.\n"
+		"         802.11g - 1,2,3,4,5,6,7,8,9,10,11,12,13,14\n"
+		"         802.11n - 36,38,40,42,44,46,48,149,151,153,155,157,159,161,165\n"
 		"      -s <pps>\n"
 		"         Set speed in packets per second (Default: 50)\n";
 
@@ -371,8 +371,8 @@ char use_deau[]="d   - Deauthentication / Disassociation Amok Mode\n"
 		"         Set speed in packets per second (Default: unlimited)\n"
 		"      -c [chan,chan,chan,...]\n"
 		"         Enable channel hopping. Without providing any channels, mdk3 will hop an all\n"
-		"         14 b/g channels. Channel will be changed every 5 seconds.\n";
-		"         802.11g - 1,2,3,4,5,6,7,8,9,10,11,12,13,14\n";
+		"         14 b/g channels. Channel will be changed every 3 seconds.\n"
+		"         802.11g - 1,2,3,4,5,6,7,8,9,10,11,12,13,14\n"
 		"         802.11n - 36,38,40,42,44,46,48,149,151,153,155,157,159,161,165\n";
 
 char use_mich[]="m   - Michael shutdown exploitation (TKIP)\n"
@@ -417,8 +417,8 @@ char use_wids[]="w   - WIDS/WIPS/WDS Confusion\n"
 		"         SSID of target WDS network\n"
 		"      -c [chan,chan,chan...]\n"
 		"         Use channel hopping\n"
-		"         802.11g - 1,2,3,4,5,6,7,8,9,10,11,12,13,14\n";
-		"         802.11n - 36,38,40,42,44,46,48,149,151,153,155,157,159,161,165\n";
+		"         802.11g - 1,2,3,4,5,6,7,8,9,10,11,12,13,14\n"
+		"         802.11n - 36,38,40,42,44,46,48,149,151,153,155,157,159,161,165\n"
 		"      -z\n"
 		"         activate Zero_Chaos' WIDS exploit\n"
 		"         (authenticates clients from a WDS to foreign APs to make WIDS go nuts)\n";
