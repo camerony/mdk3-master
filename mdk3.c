@@ -218,7 +218,7 @@ int useqosexploit = 0;                       // Is 1 when user decided to use be
 int wpad_cycles = 0, wpad_auth = 0;          // Counters for WPA downgrade: completed deauth cycles, sniffed 802.1x auth packets
 int wpad_wep = 0, wpad_beacons = 0;          // Counters for WPA downgrade: sniffed WEP/open packets, sniffed beacons/sec
 
-int chans [MAX_CHAN_COUNT] = { 1, 7, 13, 2, 8, 3, 14, 9, 4, 10, 5, 11, 6, 12, 36, 38, 40, 42, 44, 46, 48, 149, 151, 153, 155, 157, 159, 161, 165, 0 };
+int chans [MAX_CHAN_COUNT] = { 1, 7, 13, 2, 8, 3, 14, 9, 4, 10, 5, 11, 6, 12, 36, 38, 40, 42, 44, 46, 48, 149, 151, 153, 155, 157, 159, 161, 165 };
 
 #define PKT_EAPOL_START \
 	"\x08\x01\x3a\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00" \
@@ -1221,8 +1221,10 @@ uchar *get_macs_from_packet(char type, uchar *packet)
 
 void channel_hopper()
 {
+    while (1) {
 	set_channel(chans[rand() % channel_count]);
 	sleep(hopper_seconds);
+    }
 }
 
 void init_channel_hopper(char *chanlist, int seconds)
@@ -1246,8 +1248,7 @@ void init_channel_hopper(char *chanlist, int seconds)
 		}
 	    }
 	}
-	channel_count = lpos;
-	chans[lpos] = 0;
+	channel_count = lpos-1;
     }
 
     hopper_seconds = seconds;
